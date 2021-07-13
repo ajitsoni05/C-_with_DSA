@@ -1,5 +1,10 @@
 void printTree(TreeNode<int>* root)
 {
+	//Edge case (not a base case)
+	if(root->data==NULL)
+	{
+		return;
+	}
 	cout<<root->data<<":"<<endl;
 	for(int i=0;i<root->children.size();i++)
 	{
