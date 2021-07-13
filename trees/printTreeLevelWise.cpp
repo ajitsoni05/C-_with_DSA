@@ -39,11 +39,12 @@ void printLevelWise(TreeNode<int>* root)
         { 
             if(i==numchild-1)
         {
-            cout<<front->children[i]->data;
-            
-        }else{
+            cout<<front->children[i]->data;   
+        }
+         else
+         {
             cout<<front->children[i]->data<<",";
-            }
+         }
             pendingNodes.push(front->children[i]);
         }
         cout<<endl;
