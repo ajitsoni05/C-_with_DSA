@@ -1,4 +1,3 @@
-//This code requires TreeNode class to be implemented.It has been provided under the trees folder.
 #include<queue>
 #include<vector>
 #include<iostream>
@@ -7,7 +6,7 @@ TreeNode<int>* takeInputLevelWise()
   int rootdata;
   cout<<"Enter root data"<<endl;
   cin>>rootdata;
-  TreeNode<int>* root=new TreeNode<int>(rootdata);
+  TreeNode<int>* root=new TreeNode<int> (rootdata);
   queue<TreeNode<int>*> pendingNodes;
   pendingNodes.push(root);
   while(pendingNodes.size()!=0)
@@ -27,4 +26,5 @@ TreeNode<int>* takeInputLevelWise()
       pendingNodes.push(child);
     }
   }
+  return root;
 }
