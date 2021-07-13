@@ -1,14 +1,14 @@
 void printTree(TreeNode<int>* root)
 {
 	//Edge case (not a base case)
-	if(root->data==NULL)
+	if(root==NULL)
 	{
 		return;
 	}
-	cout<<root->data<<":"<<endl;
+	cout<<root->data<<":";
 	for(int i=0;i<root->children.size();i++)
 	{
-		if(i==children.size()-1)
+		if(i==root->children.size()-1)
 		{
 			cout<<root->children[i]->data;
 			continue;
@@ -16,7 +16,7 @@ void printTree(TreeNode<int>* root)
 		cout<<root->children[i]->data<<",";
 	}
 	cout<<endl;
-	for(int i=0;i<children.size();i++)
+	for(int i=0;i<root->children.size();i++)
 	{
 		printTree(root->children[i]);
 	}
