@@ -20,7 +20,7 @@
     };
 
 ************************************************************/
-
+/* Time complexity: O(N) Space complexity: O(H) where N is the number of nodes in the tree and H is the height/depth of the tree */
 bool isPresent(TreeNode<int>* root, int x) {
     // Write your code here
     if(root==NULL)
