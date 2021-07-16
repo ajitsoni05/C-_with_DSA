@@ -1,65 +1,62 @@
+/*
+Time complexity: O(V + E)
+Space complexity: O(V^2)
+where V is the number of vertices in the input graph and
+E is the number of edges in the input graph
+*/
 #include <iostream>
-#include<vector>
+#include <vector>
 using namespace std;
-vector<int> getPath(int**edges,int n,bool*visited,int v1,int v2)
-{
-     visited[v1]=true;
-    vector<int> ans;
-    if(v1==v2)
-    {
-        ans.push_back(v1);
-        return ans;
+vector<int>* getDFSPathHelper(bool** graph, int v, int start, int end, bool* visited) {
+    if (start == end) {
+        vector<int>* output = new vector<int>();
+        output->push_back(end);
+        return output;
     }
-    for(int i=0;i<n;i++)
-    {
-        if(i==v1)
-        {
-            continue;
-        }
-        if(edges[v1][i]==1&&!visited[i])
-        {
-            ans=getPath(edges,n,visited,i,v2);
-            if(ans.size()!=0)
-            {
-                ans.push_back(v1);
-                return ans;
+    visited[start] = true;
+    for (int i = 0; i < v; ++i) {
+        if (graph[start][i] && !visited[i]) {
+            vector<int>* smallOutput = getDFSPathHelper(graph, v, i, end, visited);
+            if (smallOutput != NULL) {
+                smallOutput->push_back(start);
+                return smallOutput;
             }
         }
     }
-    
+    return NULL;
+}
+vector<int>* getDFSPath(bool** graph, int v, int start, int end) {
+    bool* visited = new bool[v];
+    for (int i = 0; i < v; i++) {
+        visited[i] = false;
+    }
+    vector<int>* output = getDFSPathHelper(graph, v, start, end, visited);
+    delete[] visited;
+    return output;
 }
 int main() {
-    // Write your code here
-    int n,e;
-    cin>>n>>e;
-    int**edges=new int*[n];
-    for(int i=0;i<n;i++)
-    {
-        edges[i]=new int[n];
-        for(int j=0;j<n;j++)
-        {
-            edges[i][j]=0;
+    int v, e;
+    cin >> v >> e;
+    bool** graph = new bool*[v];
+    for (int i = 0; i < v; ++i) {
+        graph[i] = new bool[v]();
+    }
+    for (int i = 0, a, b; i < e; ++i) {
+        cin >> a >> b;
+        graph[a][b] = true;
+        graph[b][a] = true;
+    }
+    int start, end;
+    cin >> start >> end;
+    vector<int>* output = getDFSPath(graph, v, start, end);
+    if (output != NULL) {
+        for (int i = 0; i < output->size(); ++i) {
+            cout << output->at(i) << " ";
         }
+        delete output;
     }
-    for(int i=0;i<e;i++)
-    {
-        int f,s;
-        cin>>f>>s;
-        edges[f][s]=1;
-        edges[s][f]=1;
-        
+    for (int i = 0; i < v; ++i) {
+        delete[] graph[i];
     }
-    int v1,v2;
-    cin>>v1>>v2;
-    bool*visited =new bool[n];
-    for(int i=0;i<n;i++)
-    {
-        visited[i]=false;
-    }
-   vector<int> a= getPath(edges,n,visited,v1,v2);
-    for(int i=0;i<a.size();i++)
-    {
-        cout<<a[i]<<" ";
-    }
-    
+    delete[] graph;
 }
